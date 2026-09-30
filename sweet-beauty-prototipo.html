@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Beauty — Tu belleza, tu momento</title>
+<style>
+:root{
+  --pink-baby:#ffe4ec; --pink-pastel:#ffc9dc; --pink-soft:#ff9ebb; --pink-strong:#e8558f;
+  --cream:#fff8f5; --white:#ffffff; --text:#4a3540; --text-light:#8a7480; --shadow:0 8px 24px rgba(232,85,143,.12);
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+h1,h2,h3,.font-title{font-family:'Georgia',serif}
+body{background:var(--cream);color:var(--text);overflow-x:hidden}
+img,svg{max-width:100%}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Top bar */
+.topbar{background:var(--pink-strong);color:#fff;font-size:13px;padding:6px 0;text-align:center}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.topbar-links{display:flex;gap:16px}
+.topbar-links a{opacity:.9}
+.topbar-links a:hover{opacity:1;text-decoration:underline}
+
+/* Header */
+header.main{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.04);position:sticky;top:0;z-index:100}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:16px}
+.logo{display:flex;flex-direction:column;line-height:1}
+.logo b{font-size:26px;color:var(--pink-strong);font-family:Georgia,serif}
+.logo span{font-size:11px;color:var(--text-light);letter-spacing:.5px}
+.search-wrap{flex:1;max-width:480px;position:relative}
+.search-wrap input{width:100%;padding:11px 44px 11px 16px;border-radius:30px;border:1.5px solid var(--pink-pastel);background:var(--pink-baby);font-size:14px;outline:none;transition:.2s}
+.search-wrap input:focus{border-color:var(--pink-strong);background:#fff}
+.search-wrap .icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--pink-strong)}
+.header-icons{display:flex;gap:18px;align-items:center}
+.icon-btn{position:relative;background:none;font-size:20px;color:var(--text);padding:4px}
+.icon-btn:hover{color:var(--pink-strong)}
+.badge{position:absolute;top:-6px;right:-8px;background:var(--pink-strong);color:#fff;font-size:10px;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center}
+.hamburger{display:none;font-size:24px;background:none}
+
+/* Nav */
+nav.mainnav{background:var(--pink-baby);border-top:1px solid var(--pink-pastel)}
+nav.mainnav ul{display:flex;list-style:none;justify-content:center;gap:28px;padding:10px 0;flex-wrap:wrap}
+nav.mainnav a{font-size:14px;font-weight:600;color:var(--text);padding:4px 2px;border-bottom:2px solid transparent}
+nav.mainnav a:hover,nav.mainnav a.active{color:var(--pink-strong);border-color:var(--pink-strong)}
+
+/* Hero */
+.hero{background:linear-gradient(120deg,var(--pink-baby) 0%,var(--pink-pastel) 100%);padding:60px 20px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"✨";position:absolute;font-size:60px;opacity:.2;left:8%;top:20%}
+.hero::after{content:"💄";position:absolute;font-size:60px;opacity:.2;right:8%;bottom:15%}
+.hero h1{font-size:42px;color:var(--pink-strong);margin-bottom:12px}
+.hero p{font-size:17px;color:var(--text);margin-bottom:24px}
+.btn-primary{background:var(--pink-strong);color:#fff;padding:13px 32px;border-radius:30px;font-size:15px;font-weight:600;box-shadow:var(--shadow);transition:.2s}
+.btn-primary:hover{background:var(--pink-soft);transform:translateY(-2px)}
+.btn-outline{background:transparent;border:1.5px solid var(--pink-strong);color:var(--pink-strong);padding:11px 28px;border-radius:30px;font-weight:600}
+.btn-outline:hover{background:var(--pink-strong);color:#fff}
+
+/* sections */
+section{padding:50px 20px}
+.section-title{text-align:center;font-size:28px;margin-bottom:8px;color:var(--text)}
+.section-sub{text-align:center;color:var(--text-light);margin-bottom:32px;font-size:14px}
+
+/* categories */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;max-width:1100px;margin:0 auto}
+.cat-card{background:#fff;border-radius:var(--radius);padding:24px 12px;text-align:center;box-shadow:var(--shadow);transition:.25s;cursor:pointer}
+.cat-card:hover{transform:translateY(-5px);border:1px solid var(--pink-soft)}
+.cat-card .emoji{font-size:32px;margin-bottom:8px}
+.cat-card .name{font-weight:600;font-size:14px}
+
+/* filters + catalog layout */
+.catalog-layout{display:flex;gap:24px;max-width:1200px;margin:0 auto;align-items:flex-start}
+.filters{width:230px;background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);flex-shrink:0}
+.filters h4{margin-bottom:10px;font-size:14px;color:var(--pink-strong)}
+.filters .group{margin-bottom:18px}
+.filters label{display:block;font-size:13px;margin-bottom:6px;cursor:pointer}
+.filters input[type=range]{width:100%}
+.filters select,.filters input[type=text]{width:100%;padding:7px;border-radius:8px;border:1px solid var(--pink-pastel);font-size:13px}
+#clearFilters{width:100%;padding:8px;background:var(--pink-baby);border-radius:8px;font-size:13px;color:var(--pink-strong);font-weight:600}
+.catalog-main{flex:1}
+.catalog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.catalog-top select{padding:8px 10px;border-radius:8px;border:1px solid var(--pink-pastel);font-size:13px}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.no-results{text-align:center;padding:40px;color:var(--text-light)}
+
+/* product card */
+.p-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.25s;position:relative;display:flex;flex-direction:column;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.p-card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(232,85,143,.2)}
+.p-img{height:150px;background:linear-gradient(135deg,var(--pink-baby),var(--pink-pastel));display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;cursor:pointer}
+.p-badge{position:absolute;top:8px;left:8px;background:var(--pink-strong);color:#fff;font-size:10px;padding:3px 8px;border-radius:10px;font-weight:600}
+.p-badge.new{background:#7bb87b}
+.fav-btn{position:absolute;top:8px;right:8px;background:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:.2s}
+.fav-btn.active{color:var(--pink-strong)}
+.p-body{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.p-cat{font-size:10px;color:var(--pink-strong);text-transform:uppercase;font-weight:700;letter-spacing:.4px}
+.p-brand{font-size:11px;color:var(--text-light)}
+.p-name{font-size:14px;font-weight:600;cursor:pointer}
+.p-stars{font-size:12px;color:#f5a623}
+.p-price-row{display:flex;align-items:center;gap:8px;margin-top:4px}
+.p-price{font-weight:700;color:var(--pink-strong);font-size:15px}
+.p-old{font-size:12px;color:var(--text-light);text-decoration:line-through}
+.p-stock{font-size:11px;margin-top:2px}
+.p-stock.ok{color:#4caf82}.p-stock.low{color:#e8a020}.p-stock.out{color:#e05353}
+.add-cart-btn{margin-top:8px;background:var(--pink-strong);color:#fff;padding:9px;border-radius:10px;font-size:13px;font-weight:600;transition:.2s}
+.add-cart-btn:hover{background:var(--pink-soft)}
+.add-cart-btn:disabled{background:#ddd;cursor:not-allowed}
+
+/* benefits */
+.benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:1000px;margin:0 auto;text-align:center}
+.benefit{padding:16px}
+.benefit .emoji{font-size:28px;margin-bottom:6px}
+.benefit p{font-size:13px;color:var(--text-light)}
+
+/* about/newsletter */
+.about-sec{background:#fff;border-radius:var(--radius);max-width:900px;margin:0 auto;padding:40px;text-align:center;box-shadow:var(--shadow)}
+.newsletter{background:linear-gradient(120deg,var(--pink-strong),var(--pink-soft));border-radius:var(--radius);max-width:900px;margin:0 auto;padding:40px;text-align:center;color:#fff}
+.newsletter form{display:flex;gap:10px;max-width:400px;margin:16px auto 0;flex-wrap:wrap;justify-content:center}
+.newsletter input{flex:1;min-width:200px;padding:11px 16px;border-radius:30px;border:none;outline:none}
+.newsletter button{background:#fff;color:var(--pink-strong);padding:11px 24px;border-radius:30px;font-weight:700}
+
+/* footer */
+footer{background:#3a2a32;color:#f0e0e6;padding:44px 20px 20px}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;max-width:1100px;margin:0 auto}
+.footer-grid h4{color:#fff;margin-bottom:12px;font-size:14px}
+.footer-grid ul{list-style:none}
+.footer-grid li{margin-bottom:8px;font-size:13px;opacity:.8}
+.footer-grid li a:hover{opacity:1;text-decoration:underline}
+.footer-bottom{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;opacity:.6}
+
+/* modals */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.overlay.show{display:flex}
+.modal{background:#fff;border-radius:var(--radius);max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:28px;position:relative;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal.wide{max-width:900px}
+.modal-close{position:absolute;top:14px;right:16px;font-size:20px;background:none;color:var(--text-light)}
+.modal h3{font-size:20px;margin-bottom:16px;color:var(--pink-strong)}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:13px;margin-bottom:5px;font-weight:600}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--pink-pastel);font-size:14px;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--pink-strong)}
+.error-text{color:#e05353;font-size:12px;margin-top:4px;display:none}
+.switch-line{text-align:center;font-size:13px;margin-top:10px}
+.switch-line a{color:var(--pink-strong);font-weight:600}
+
+/* product detail */
+.pd-layout{display:flex;gap:24px;flex-wrap:wrap}
+.pd-img{flex:1;min-width:220px;height:260px;background:linear-gradient(135deg,var(--pink-baby),var(--pink-pastel));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:80px}
+.pd-info{flex:1;min-width:220px}
+.qty-selector{display:flex;align-items:center;gap:10px;margin:14px 0}
+.qty-selector button{width:32px;height:32px;border-radius:8px;background:var(--pink-baby);font-size:16px;color:var(--pink-strong)}
+.related-title{margin-top:24px;font-size:15px;font-weight:700}
+
+/* cart */
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f2dbe3;align-items:center}
+.cart-item .ci-img{width:54px;height:54px;border-radius:10px;background:linear-gradient(135deg,var(--pink-baby),var(--pink-pastel));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.cart-item .ci-info{flex:1}
+.cart-item .ci-name{font-size:13px;font-weight:600}
+.cart-item .ci-price{font-size:12px;color:var(--pink-strong)}
+.ci-controls{display:flex;align-items:center;gap:6px}
+.ci-controls button{width:24px;height:24px;background:var(--pink-baby);border-radius:6px;font-size:13px}
+.ci-remove{color:#e05353;font-size:12px;margin-top:4px}
+.cart-summary{margin-top:16px;border-top:2px dashed var(--pink-pastel);padding-top:14px}
+.cart-summary-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px}
+.cart-summary-row.total{font-weight:700;font-size:17px;color:var(--pink-strong)}
+.empty-msg{text-align:center;padding:30px;color:var(--text-light)}
+
+/* toast */
+#toast-wrap{position:fixed;bottom:20px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:8px}
+.toast{background:#3a2a32;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;box-shadow:0 6px 18px rgba(0,0,0,.2);animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+/* admin */
+.admin-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.admin-tabs button{padding:8px 16px;border-radius:20px;background:var(--pink-baby);font-size:13px;font-weight:600}
+.admin-tabs button.active{background:var(--pink-strong);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px;text-align:left;border-bottom:1px solid #f2dbe3}
+th{color:var(--pink-strong)}
+.mini-btn{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600}
+.mini-btn.edit{background:var(--pink-baby);color:var(--pink-strong)}
+.mini-btn.del{background:#fde3e3;color:#e05353}
+
+@media(max-width:900px){
+  .catalog-layout{flex-direction:column}
+  .filters{width:100%}
+}
+@media(max-width:768px){
+  .hamburger{display:block}
+  nav.mainnav ul{display:none;flex-direction:column;text-align:center}
+  nav.mainnav.open ul{display:flex}
+  .search-wrap{order:3;max-width:100%;flex-basis:100%}
+  .header-inner{flex-wrap:wrap}
+  .hero h1{font-size:30px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="container">
+  <span>Envíos a todo Colombia 💗</span>
+  <div class="topbar-links"><a href="#" onclick="openModal('contactModal')">Contáctanos</a><a href="#" onclick="openModal('helpModal')">Ayuda</a></div>
+</div></div>
+
+<header class="main">
+  <div class="header-inner">
+    <button class="hamburger" onclick="document.querySelector('nav.mainnav').classList.toggle('open')">☰</button>
+    <a href="#" class="logo" onclick="showHome()"><b>💗 Sweet Beauty</b><span>Tu belleza, tu momento.</span></a>
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="¿Qué estás buscando?" oninput="handleSearch(this.value)">
+      <span class="icon">🔍</span>
+    </div>
+    <div class="header-icons">
+      <button class="icon-btn" onclick="openModal(state.user? 'profileModal':'loginModal')" title="Usuario">👤</button>
+      <button class="icon-btn" onclick="openFavorites()" title="Favoritos">🤍<span class="badge" id="favBadge">0</span></button>
+      <button class="icon-btn" onclick="openCart()" title="Carrito">🛒<span class="badge" id="cartBadge">0</span></button>
+    </div>
+  </div>
+  <nav class="mainnav">
+    <ul>
+      <li><a href="#" onclick="showHome()">Inicio</a></li>
+      <li><a href="#" onclick="filterByCategory('all')">Maquillaje</a></li>
+      <li><a href="#" onclick="filterByCategory('rostro')">Rostro</a></li>
+      <li><a href="#" onclick="filterByCategory('ojos')">Ojos</a></li>
+      <li><a href="#" onclick="filterByCategory('labios')">Labios</a></li>
+      <li><a href="#" onclick="filterByCategory('skincare')">Cuidado de la piel</a></li>
+      <li><a href="#" onclick="filterByCategory('brochas')">Brochas</a></li>
+      <li><a href="#" onclick="filterByCategory('accesorios')">Accesorios</a></li>
+      <li><a href="#" onclick="filterByCategory('kits')">Kits</a></li>
+      <li><a href="#" onclick="filterByOffers()">Ofertas</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="homeSections">
+  <section class="hero">
+    <h1>Tu belleza, tu estilo</h1>
+    <p>Descubre productos que hacen brillar tu esencia.</p>
+    <button class="btn-primary" onclick="scrollToCatalog()">Comprar ahora</button>
+  </section>
+
+  <section>
+    <h2 class="section-title">Explora nuestras categorías</h2>
+    <p class="section-sub">Encuentra justo lo que buscas</p>
+    <div class="cat-grid" id="catGrid"></div>
+  </section>
+
+  <section style="background:#fff">
+    <h2 class="section-title">Sweet Deals 💕</h2>
+    <p class="section-sub">Hasta 30% OFF en productos seleccionados</p>
+    <div style="text-align:center"><button class="btn-primary" onclick="filterByOffers()">Ver ofertas</button></div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Recién llegados ✨</h2>
+    <div class="product-grid" id="newGrid"></div>
+  </section>
+</div>
+
+<section id="catalogSection">
+  <h2 class="section-title">Catálogo</h2>
+  <div class="catalog-layout">
+    <aside class="filters">
+      <h4>Filtrar</h4>
+      <div class="group">
+        <label><input type="checkbox" class="catFilter" value="rostro"> Rostro</label>
+        <label><input type="checkbox" class="catFilter" value="ojos"> Ojos</label>
+        <label><input type="checkbox" class="catFilter" value="labios"> Labios</label>
+        <label><input type="checkbox" class="catFilter" value="skincare"> Skincare</label>
+        <label><input type="checkbox" class="catFilter" value="brochas"> Brochas</label>
+        <label><input type="checkbox" class="catFilter" value="accesorios"> Accesorios</label>
+        <label><input type="checkbox" class="catFilter" value="kits"> Kits</label>
+      </div>
+      <div class="group">
+        <h4>Marca</h4>
+        <select id="brandFilter"><option value="">Todas</option></select>
+      </div>
+      <div class="group">
+        <h4>Precio máximo: <span id="priceLabel">200.000</span></h4>
+        <input type="range" id="priceRange" min="10000" max="200000" step="5000" value="200000">
+      </div>
+      <div class="group">
+        <label><input type="checkbox" id="availFilter"> Solo disponibles</label>
+        <label><input type="checkbox" id="ratingFilter"> 4 estrellas o más</label>
+      </div>
+      <button id="clearFilters" onclick="clearFilters()">Limpiar filtros</button>
+    </aside>
+    <div class="catalog-main">
+      <div class="catalog-top">
+        <span id="resultsCount" style="font-size:13px;color:var(--text-light)"></span>
+        <select id="sortSelect" onchange="renderCatalog()">
+          <option value="pop">Más populares</option>
+          <option value="new">Más recientes</option>
+          <option value="asc">Precio menor a mayor</option>
+          <option value="desc">Precio mayor a menor</option>
+        </select>
+      </div>
+      <div class="product-grid" id="catalogGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff">
+  <h2 class="section-title">Marcas que amamos</h2>
+  <div class="cat-grid" id="brandsGrid"></div>
+</section>
+
+<section>
+  <div class="benefits">
+    <div class="benefit"><div class="emoji">🚚</div><p>Envíos a todo Colombia</p></div>
+    <div class="benefit"><div class="emoji">💳</div><p>Pagos seguros</p></div>
+    <div class="benefit"><div class="emoji">💗</div><p>Productos seleccionados</p></div>
+    <div class="benefit"><div class="emoji">📦</div><p>Compra fácil y rápida</p></div>
+  </div>
+</section>
+
+<section id="aboutSection">
+  <div class="about-sec">
+    <h2 style="color:var(--pink-strong)">Más que maquillaje, una forma de expresarte.</h2>
+    <p style="margin-top:12px;color:var(--text-light)">En Sweet Beauty creemos que el maquillaje es una forma de descubrir tu estilo, experimentar y sentirte increíble.</p>
+    <button class="btn-outline" style="margin-top:18px" onclick="openModal('aboutModal')">Conócenos</button>
+  </div>
+</section>
+
+<section>
+  <div class="newsletter">
+    <h2>Únete a Sweet Beauty 💌</h2>
+    <p>Recibe novedades, lanzamientos y ofertas especiales.</p>
+    <form onsubmit="return subscribeNewsletter(event)">
+      <input type="email" id="newsEmail" placeholder="Ingresa tu correo" required>
+      <button type="submit">Suscribirme</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><h4>💗 SWEET BEAUTY</h4><p style="font-size:13px;opacity:.8">Belleza que empieza contigo.</p></div>
+    <div><h4>COMPRA</h4><ul>
+      <li><a href="#" onclick="filterByCategory('all')">Maquillaje</a></li>
+      <li><a href="#" onclick="filterByCategory('skincare')">Skincare</a></li>
+      <li><a href="#" onclick="filterByCategory('accesorios')">Accesorios</a></li>
+      <li><a href="#" onclick="filterByCategory('kits')">Kits</a></li>
+      <li><a href="#" onclick="filterByOffers()">Ofertas</a></li>
+    </ul></div>
+    <div><h4>AYUDA</h4><ul>
+      <li><a href="#" onclick="openModal('helpModal')">Preguntas frecuentes</a></li>
+      <li><a href="#" onclick="openModal('helpModal')">Envíos</a></li>
+      <li><a href="#" onclick="openModal('helpModal')">Métodos de pago</a></li>
+      <li><a href="#" onclick="openModal('contactModal')">Contacto</a></li>
+    </ul></div>
+    <div><h4>SÍGUENOS</h4><ul>
+      <li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">Facebook</a></li>
+    </ul></div>
+    <div><h4>ADMIN</h4><ul><li><a href="#" onclick="openModal('adminModal');renderAdmin()">Panel administrativo</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 Sweet Beauty. Todos los derechos reservados. · Proyecto académico — Unidad Educativa El Futuro Del Mañana</div>
+</footer>
+
+<!-- MODALS -->
+<div class="overlay" id="loginModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+  <h3>Iniciar sesión</h3>
+  <form onsubmit="return doLogin(event)">
+    <div class="form-group"><label>Correo</label><input type="email" id="loginEmail" required></div>
+    <div class="form-group"><label>Contraseña</label><input type="password" id="loginPass" required></div>
+    <div class="error-text" id="loginError">Correo o contraseña incorrectos.</div>
+    <button type="submit" class="btn-primary" style="width:100%">Iniciar sesión</button>
+  </form>
+  <p class="switch-line">¿No tienes cuenta? <a href="#" onclick="closeModal('loginModal');openModal('registerModal')">Regístrate</a></p>
+</div></div>
+
+<div class="overlay" id="registerModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('registerModal')">✕</button>
+  <h3>Crear cuenta</h3>
+  <form onsubmit="return doRegister(event)">
+    <div class="form-group"><label>Nombre</label><input type="text" id="regName" required></div>
+    <div class="form-group"><label>Correo</label><input type="email" id="regEmail" required></div>
+    <div class="form-group"><label>Contraseña</label><input type="password" id="regPass" required minlength="6"></div>
+    <div class="form-group"><label>Confirmar contraseña</label><input type="password" id="regPass2" required></div>
+    <div class="error-text" id="regError">Revisa los datos ingresados.</div>
+    <button type="submit" class="btn-primary" style="width:100%">Registrarme</button>
+  </form>
+  <p class="switch-line">¿Ya tienes cuenta? <a href="#" onclick="closeModal('registerModal');openModal('loginModal')">Inicia sesión</a></p>
+</div></div>
+
+<div class="overlay" id="profileModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('profileModal')">✕</button>
+  <h3>Mi perfil</h3>
+  <div id="profileBody"></div>
+</div></div>
+
+<div class="overlay" id="cartModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('cartModal')">✕</button>
+  <h3>Tu carrito</h3>
+  <div id="cartBody"></div>
+</div></div>
+
+<div class="overlay" id="favModal"><div class="modal wide">
+  <button class="modal-close" onclick="closeModal('favModal')">✕</button>
+  <h3>Favoritos</h3>
+  <div class="product-grid" id="favGrid"></div>
+</div></div>
+
+<div class="overlay" id="productModal"><div class="modal wide">
+  <button class="modal-close" onclick="closeModal('productModal')">✕</button>
+  <div id="productBody"></div>
+</div></div>
+
+<div class="overlay" id="checkoutModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('checkoutModal')">✕</button>
+  <h3>Finalizar compra</h3>
+  <form onsubmit="return doCheckout(event)">
+    <div class="form-group"><label>Nombre</label><input type="text" id="coName" required></div>
+    <div class="form-group"><label>Correo</label><input type="email" id="coEmail" required></div>
+    <div class="form-group"><label>Teléfono</label><input type="tel" id="coPhone" required></div>
+    <div class="form-group"><label>Dirección</label><input type="text" id="coAddress" required></div>
+    <div class="form-group"><label>Ciudad</label><input type="text" id="coCity" required></div>
+    <div class="form-group"><label>Departamento</label><input type="text" id="coDept" required></div>
+    <div class="form-group"><label>Método de pago</label>
+      <select id="coPayment"><option>Tarjeta</option><option>PSE</option><option>Contraentrega</option></select>
+    </div>
+    <p style="font-size:11px;color:var(--text-light);margin-bottom:10px">🔒 Simulación académica — no se procesan pagos reales ni se solicitan datos bancarios.</p>
+    <button type="submit" class="btn-primary" style="width:100%">Confirmar pedido</button>
+  </form>
+</div></div>
+
+<div class="overlay" id="confirmModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('confirmModal')">✕</button>
+  <div id="confirmBody" style="text-align:center"></div>
+</div></div>
+
+<div class="overlay" id="aboutModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('aboutModal')">✕</button>
+  <h3>Sobre Sweet Beauty</h3>
+  <p style="font-size:14px;line-height:1.7;color:var(--text-light)">Sweet Beauty nació como un proyecto académico de la Unidad Educativa El Futuro Del Mañana (Bogotá, 2026), con el propósito de facilitar la búsqueda, consulta y compra de productos de maquillaje en un solo espacio digital, organizado y accesible.<br><br>Equipo: Christian Blanco (Backend), Nataly Páez (Frontend), William Fuquene (Calidad) y Samuel Rubiano (Base de datos).</p>
+</div></div>
+
+<div class="overlay" id="contactModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('contactModal')">✕</button>
+  <h3>Contáctanos</h3>
+  <form onsubmit="return sendContact(event)">
+    <div class="form-group"><label>Nombre</label><input type="text" required></div>
+    <div class="form-group"><label>Correo</label><input type="email" required></div>
+    <div class="form-group"><label>Asunto</label><input type="text" required></div>
+    <div class="form-group"><label>Mensaje</label><textarea rows="3" required></textarea></div>
+    <button type="submit" class="btn-primary" style="width:100%">Enviar mensaje</button>
+  </form>
+</div></div>
+
+<div class="overlay" id="helpModal"><div class="modal">
+  <button class="modal-close" onclick="closeModal('helpModal')">✕</button>
+  <h3>Ayuda</h3>
+  <p style="font-size:13px;color:var(--text-light);line-height:1.8"><b>Envíos:</b> a todo Colombia, 3-5 días hábiles.<br><b>Pagos:</b> Tarjeta, PSE o contraentrega (simulados).<br><b>Cambios:</b> hasta 5 días después de la compra.<br><b>Contacto:</b> usa el formulario de contacto.</p>
+</div></div>
+
+<div class="overlay" id="adminModal"><div class="modal wide">
+  <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
+  <h3>Panel administrativo</h3>
+  <div class="admin-tabs">
+    <button class="active" onclick="adminTab('products',this)">Productos</button>
+    <button onclick="adminTab('inventory',this)">Inventario</button>
+  </div>
+  <div id="adminBody"></div>
+</div></div>
+
+<div id="toast-wrap"></div>
+
+<script>
+/* ===== DATA ===== */
+const CATS = [
+  {id:'rostro',emoji:'💄',name:'Rostro'},{id:'ojos',emoji:'👁️',name:'Ojos'},
+  {id:'labios',emoji:'💋',name:'Labios'},{id:'skincare',emoji:'🧴',name:'Skincare'},
+  {id:'brochas',emoji:'🖌️',name:'Brochas'},{id:'accesorios',emoji:'🎀',name:'Accesorios'}
+];
+const BRANDS = ['Bella Glow','Rose Cosmetics','Lumière Beauty','Pink Muse','Sweet Glow'];
+const ICONS = {rostro:'💄',ojos:'👁️',labios:'💋',skincare:'🧴',brochas:'🖌️',accesorios:'🎀',kits:'🎁'};
+const SVG_ICONS = {
+  rostro:`<ellipse cx="50" cy="90" rx="24" ry="6" fill="url(#gShadow)"/><rect x="34" y="24" width="32" height="58" rx="8" fill="url(#gGlass)" stroke="var(--pink-strong)" stroke-width="2"/><rect x="38" y="45" width="24" height="34" rx="5" fill="url(#gLiquid)"/><rect x="41" y="8" width="18" height="18" rx="4" fill="url(#gCap)"/><rect x="44" y="16" width="12" height="10" rx="2" fill="var(--pink-strong)"/><ellipse cx="42" cy="35" rx="6" ry="14" fill="url(#gShine)"/>`,
+  ojos:`<ellipse cx="50" cy="90" rx="28" ry="6" fill="url(#gShadow)"/><rect x="14" y="26" width="72" height="52" rx="10" fill="url(#gCap)"/><rect x="18" y="30" width="64" height="44" rx="7" fill="url(#gGlass)" stroke="#fff" stroke-width="2"/><circle cx="32" cy="52" r="9" fill="var(--pink-pastel)"/><circle cx="50" cy="52" r="9" fill="var(--pink-soft)"/><circle cx="68" cy="52" r="9" fill="var(--pink-strong)"/><ellipse cx="28" cy="47" rx="4" ry="3" fill="url(#gShine)"/>`,
+  labios:`<ellipse cx="50" cy="92" rx="18" ry="5" fill="url(#gShadow)"/><path d="M40 42 L50 14 L60 42 Z" fill="url(#gLiquid)"/><rect x="40" y="42" width="20" height="20" fill="url(#gLiquid)"/><rect x="36" y="60" width="28" height="26" rx="4" fill="url(#gCap)"/><rect x="36" y="60" width="28" height="6" fill="#fff" opacity="0.35"/><ellipse cx="46" cy="28" rx="3" ry="8" fill="url(#gShine)"/>`,
+  skincare:`<ellipse cx="50" cy="90" rx="22" ry="6" fill="url(#gShadow)"/><rect x="34" y="30" width="32" height="50" rx="9" fill="url(#gGlass)" stroke="var(--pink-strong)" stroke-width="2"/><rect x="41" y="12" width="18" height="20" rx="4" fill="url(#gCap)"/><line x1="50" y1="32" x2="50" y2="18" stroke="var(--pink-strong)" stroke-width="3"/><circle cx="50" cy="34" r="2.5" fill="var(--pink-strong)"/><ellipse cx="42" cy="45" rx="5" ry="14" fill="url(#gShine)"/>`,
+  brochas:`<ellipse cx="50" cy="90" rx="16" ry="5" fill="url(#gShadow)"/><ellipse cx="50" cy="26" rx="20" ry="16" fill="url(#gLiquid)"/><ellipse cx="44" cy="20" rx="8" ry="6" fill="url(#gShine)"/><rect x="46" y="38" width="8" height="8" fill="url(#gCap)"/><rect x="47" y="46" width="6" height="34" rx="3" fill="url(#gGlass)" stroke="var(--pink-strong)" stroke-width="1.5"/><rect x="45" y="78" width="10" height="8" rx="2" fill="var(--pink-strong)"/>`,
+  accesorios:`<ellipse cx="50" cy="88" rx="22" ry="5" fill="url(#gShadow)"/><circle cx="50" cy="45" r="30" fill="url(#gCap)"/><circle cx="50" cy="45" r="24" fill="url(#gGlass)" stroke="#fff" stroke-width="2"/><ellipse cx="42" cy="36" rx="8" ry="6" fill="url(#gShine)"/><rect x="46" y="72" width="8" height="14" rx="3" fill="var(--pink-strong)"/>`,
+  kits:`<ellipse cx="50" cy="90" rx="30" ry="6" fill="url(#gShadow)"/><rect x="20" y="42" width="60" height="42" rx="5" fill="url(#gGlass)" stroke="var(--pink-strong)" stroke-width="2"/><rect x="20" y="42" width="60" height="14" fill="url(#gCap)"/><rect x="45" y="20" width="10" height="64" fill="var(--pink-strong)"/><path d="M34 20 Q26 2 46 20 Q30 24 34 20 Z" fill="url(#gLiquid)"/><path d="M66 20 Q74 2 54 20 Q70 24 66 20 Z" fill="url(#gLiquid)"/>`
+};
+const SVG_DEFS = `<defs><linearGradient id="gGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="var(--pink-baby)"/><stop offset="1" stop-color="var(--pink-pastel)"/></linearGradient><linearGradient id="gCap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pink-soft)"/><stop offset="1" stop-color="var(--pink-strong)"/></linearGradient><linearGradient id="gLiquid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pink-pastel)"/><stop offset="1" stop-color="var(--pink-strong)"/></linearGradient><radialGradient id="gShadow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000" stop-opacity="0.18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><radialGradient id="gShine" cx="0.3" cy="0.3" r="0.6"><stop offset="0" stop-color="#fff" stop-opacity="0.9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>`;
+function pIcon(cat){return `<svg viewBox="0 0 100 100" width="70%" height="70%">${SVG_DEFS}${SVG_ICONS[cat]||SVG_ICONS.rostro}</svg>`;}
+
+function seedProducts(){
+  const names = {
+    rostro:['Base Fluida Radiance','Corrector Alta Cobertura','Polvo Compacto Matte','Rubor en Crema','Iluminador Líquido'],
+    ojos:['Paleta Sombras Sunset','Máscara Volumen XL','Delineador Líquido Preciso','Paleta Nude Essentials'],
+    labios:['Labial Mate Rosé','Brillo Labial Glossy','Tinta Labial Larga Duración','Labial Cremoso Velvet'],
+    skincare:['Serum Hidratante Glow','Crema Facial Nutritiva','Protector Solar Ligero'],
+    brochas:['Brocha Base Pro','Set Brochas Ojos x5','Esponja Beauty Blender'],
+    accesorios:['Espejo Compacto Sweet','Cosmetiquera Rosa','Set Pinceles Viaje'],
+  };
+  let id=1, out=[];
+  Object.entries(names).forEach(([cat,list])=>{
+    list.forEach((n,i)=>{
+      const price = 25000 + Math.floor(Math.random()*90000/1000)*1000;
+      const hasDiscount = Math.random()<0.35;
+      const discount = hasDiscount? [10,15,20,25,30][Math.floor(Math.random()*5)] : 0;
+      out.push({
+        id:id++, name:n, category:cat, brand:BRANDS[Math.floor(Math.random()*BRANDS.length)],
+        price, discount, rating:(3.5+Math.random()*1.5).toFixed(1),
+        stock: Math.floor(Math.random()*25), isNew: Math.random()<0.3,
+        emoji: ICONS[cat], desc:`${n} de Sweet Beauty. Fórmula suave, cobertura equilibrada y acabado profesional, pensada para realzar tu belleza natural con comodidad durante todo el día.`,
+        popularity: Math.floor(Math.random()*100)
+      });
+    });
+  });
+  // add kits
+  ['Kit Iniciación Maquillaje','Kit Glow Skincare','Kit Labios Sweet'].forEach(n=>{
+    const price = 60000+Math.floor(Math.random()*60);
+    out.push({id:id++,name:n,category:'kits',brand:'Sweet Glow',price,discount:20,rating:'4.6',stock:Math.floor(Math.random()*15),isNew:true,emoji:'🎁',desc:`${n}: combo especial Sweet Beauty con productos seleccionados para tu rutina.`,popularity:80});
+  });
+  return out;
+}
+
+const state = {
+  products: JSON.parse(localStorage.getItem('sb_products')||'null') || seedProducts(),
+  cart: JSON.parse(localStorage.getItem('sb_cart')||'[]'),
+  favs: JSON.parse(localStorage.getItem('sb_favs')||'[]'),
+  users: JSON.parse(localStorage.getItem('sb_users')||'[]'),
+  user: JSON.parse(localStorage.getItem('sb_session')||'null'),
+  orders: JSON.parse(localStorage.getItem('sb_orders')||'[]'),
+  search:'', catFilter:'all', showOffers:false
+};
+function persist(){
+  localStorage.setItem('sb_products',JSON.stringify(state.products));
+  localStorage.setItem('sb_cart',JSON.stringify(state.cart));
+  localStorage.setItem('sb_favs',JSON.stringify(state.favs));
+  localStorage.setItem('sb_users',JSON.stringify(state.users));
+  localStorage.setItem('sb_session',JSON.stringify(state.user));
+  localStorage.setItem('sb_orders',JSON.stringify(state.orders));
+}
+function fmt(n){return '$'+n.toLocaleString('es-CO')+' COP';}
+function finalPrice(p){return p.discount? Math.round(p.price*(1-p.discount/100)/100)*100 : p.price;}
+function stars(r){r=parseFloat(r);let s='';for(let i=1;i<=5;i++){s+= i<=Math.round(r)?'★':'☆';}return s+' ('+r+')';}
+function stockInfo(st){ if(st<=0) return {label:'Agotado',cls:'out'}; if(st<=5) return {label:'Pocas unidades: '+st,cls:'low'}; return {label:'Disponible: '+st,cls:'ok'};}
+function toast(msg){
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.getElementById('toast-wrap').appendChild(t);
+  setTimeout(()=>t.remove(),2600);
+}
+function openModal(id){document.getElementById(id).classList.add('show');}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');}));
+
+/* ===== RENDER CATEGORIES / BRANDS ===== */
+function renderCats(){
+  document.getElementById('catGrid').innerHTML = CATS.map(c=>`<div class="cat-card" onclick="filterByCategory('${c.id}')"><div class="emoji">${c.emoji}</div><div class="name">${c.name}</div></div>`).join('');
+  document.getElementById('brandsGrid').innerHTML = BRANDS.map(b=>`<div class="cat-card"><div class="emoji">✨</div><div class="name">${b}</div></div>`).join('');
+  const bf = document.getElementById('brandFilter');
+  BRANDS.forEach(b=>{const o=document.createElement('option');o.value=b;o.textContent=b;bf.appendChild(o);});
+}
+
+/* ===== PRODUCT CARD ===== */
+function cardHTML(p){
+  const fp = finalPrice(p), si = stockInfo(p.stock), isFav = state.favs.includes(p.id);
+  return `<div class="p-card">
+    <div class="p-img" onclick="openProduct(${p.id})">
+      ${p.isNew?'<span class="p-badge new">NUEVO</span>':''}
+      ${p.discount?`<span class="p-badge" style="${p.isNew?'top:30px;':''}">-${p.discount}%</span>`:''}
+      <button class="fav-btn ${isFav?'active':''}" onclick="toggleFav(${p.id})">${isFav?'♥':'♡'}</button>
+      ${pIcon(p.category)}
+    </div>
+    <div class="p-body">
+      <span class="p-cat">${p.category}</span>
+      <span class="p-brand">${p.brand}</span>
+      <span class="p-name" onclick="openProduct(${p.id})">${p.name}</span>
+      <span class="p-stars">${stars(p.rating)}</span>
+      <div class="p-price-row"><span class="p-price">${fmt(fp)}</span>${p.discount?`<span class="p-old">${fmt(p.price)}</span>`:''}</div>
+      <span class="p-stock ${si.cls}">${si.label}</span>
+      <button class="add-cart-btn" ${p.stock<=0?'disabled':''} onclick="addToCart(${p.id})">${p.stock<=0?'Agotado':'Agregar al carrito'}</button>
+    </div>
+  </div>`;
+}
+
+/* ===== NEW ARRIVALS (home) ===== */
+function renderNew(){
+  const items = state.products.filter(p=>p.isNew).slice(0,4);
+  document.getElementById('newGrid').innerHTML = items.map(cardHTML).join('');
+}
+
+/* ===== CATALOG ===== */
+function renderCatalog(){
+  let list = [...state.products];
+  if(state.search) list = list.filter(p=> p.name.toLowerCase().includes(state.search)||p.category.includes(state.search)||p.brand.toLowerCase().includes(state.search));
+  if(state.catFilter!=='all') list = list.filter(p=>p.category===state.catFilter);
+  if(state.showOffers) list = list.filter(p=>p.discount>0);
+  const checked = [...document.querySelectorAll('.catFilter:checked')].map(c=>c.value);
+  if(checked.length) list = list.filter(p=>checked.includes(p.category));
+  const brand = document.getElementById('brandFilter').value;
+  if(brand) list = list.filter(p=>p.brand===brand);
+  const maxPrice = +document.getElementById('priceRange').value;
+  list = list.filter(p=>finalPrice(p)<=maxPrice);
+  if(document.getElementById('availFilter').checked) list = list.filter(p=>p.stock>0);
+  if(document.getElementById('ratingFilter').checked) list = list.filter(p=>parseFloat(p.rating)>=4);
+  const sort = document.getElementById('sortSelect').value;
+  if(sort==='asc') list.sort((a,b)=>finalPrice(a)-finalPrice(b));
+  else if(sort==='desc') list.sort((a,b)=>finalPrice(b)-finalPrice(a));
+  else if(sort==='new') list.sort((a,b)=>b.isNew-a.isNew);
+  else list.sort((a,b)=>b.popularity-a.popularity);
+
+  document.getElementById('resultsCount').textContent = list.length+' productos encontrados';
+  document.getElementById('catalogGrid').innerHTML = list.length? list.map(cardHTML).join('') : '<div class="no-results">No encontramos productos que coincidan con tu búsqueda.</div>';
+}
+document.getElementById('priceRange').addEventListener('input',e=>{document.getElementById('priceLabel').textContent=(+e.target.value).toLocaleString('es-CO');renderCatalog();});
+document.querySelectorAll('.catFilter').forEach(c=>c.addEventListener('change',renderCatalog));
+document.getElementById('brandFilter').addEventListener('change',renderCatalog);
+document.getElementById('availFilter').addEventListener('change',renderCatalog);
+document.getElementById('ratingFilter').addEventListener('change',renderCatalog);
+function clearFilters(){
+  document.querySelectorAll('.catFilter').forEach(c=>c.checked=false);
+  document.getElementById('brandFilter').value='';
+  document.getElementById('priceRange').value=200000;
+  document.getElementById('priceLabel').textContent='200.000';
+  document.getElementById('availFilter').checked=false;
+  document.getElementById('ratingFilter').checked=false;
+  state.search='';state.catFilter='all';state.showOffers=false;
+  document.getElementById('searchInput').value='';
+  renderCatalog();
+}
+function scrollToCatalog(){document.getElementById('catalogSection').scrollIntoView({behavior:'smooth'});}
+function filterByCategory(cat){state.catFilter=cat;state.showOffers=false;clearFiltersSoft();scrollToCatalog();renderCatalog();}
+function filterByOffers(){state.showOffers=true;state.catFilter='all';clearFiltersSoft();scrollToCatalog();renderCatalog();}
+function clearFiltersSoft(){document.getElementById('priceRange').value=200000;document.getElementById('priceLabel').textContent='200.000';}
+function handleSearch(v){state.search=v.toLowerCase();state.catFilter='all';state.showOffers=false;scrollToCatalog();renderCatalog();}
+function showHome(){document.getElementById('homeSections').style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+
+/* ===== FAVORITES ===== */
+function toggleFav(id){
+  const i = state.favs.indexOf(id);
+  if(i>-1){state.favs.splice(i,1);toast('Producto eliminado del carrito de favoritos');}
+  else {state.favs.push(id);toast('💗 Agregado a favoritos');}
+  persist();updateBadges();renderCatalog();renderNew();if(document.getElementById('favModal').classList.contains('show'))openFavorites();
+}
+function openFavorites(){
+  const items = state.products.filter(p=>state.favs.includes(p.id));
+  document.getElementById('favGrid').innerHTML = items.length? items.map(cardHTML).join('') : '<div class="no-results">Aún no tienes favoritos.</div>';
+  openModal('favModal');
+}
+
+/* ===== CART ===== */
+function addToCart(id){
+  const p = state.products.find(x=>x.id===id);
+  const item = state.cart.find(x=>x.id===id);
+  const inCart = item? item.qty:0;
+  if(inCart>=p.stock){toast('No hay más stock disponible.');return;}
+  if(item) item.qty++; else state.cart.push({id,qty:1});
+  persist();updateBadges();toast('✨ Producto agregado al carrito');renderCatalog();
+}
+function changeQty(id,delta){
+  const item = state.cart.find(x=>x.id===id);
+  const p = state.products.find(x=>x.id===id);
+  item.qty += delta;
+  if(item.qty<=0){state.cart = state.cart.filter(x=>x.id!==id);toast('Producto eliminado del carrito.');}
+  else if(item.qty>p.stock){item.qty=p.stock;toast('Stock máximo alcanzado.');}
+  persist();updateBadges();renderCart();
+}
+function removeFromCart(id){state.cart=state.cart.filter(x=>x.id!==id);persist();updateBadges();renderCart();toast('Producto eliminado del carrito.');}
+function cartTotals(){
+  let subtotal=0;
+  state.cart.forEach(it=>{const p=state.products.find(x=>x.id===it.id);subtotal+=finalPrice(p)*it.qty;});
+  const shipping = subtotal>0 && subtotal<100000 ? 8000 : 0;
+  return {subtotal, shipping, total: subtotal+shipping};
+}
+function renderCart(){
+  if(!state.cart.length){document.getElementById('cartBody').innerHTML='<div class="empty-msg">Tu carrito está vacío.</div>';return;}
+  let html = state.cart.map(it=>{
+    const p = state.products.find(x=>x.id===it.id);
+    return `<div class="cart-item">
+      <div class="ci-img">${pIcon(p.category)}</div>
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-price">${fmt(finalPrice(p))} c/u</div>
+        <div class="ci-controls">
+          <button onclick="changeQty(${p.id},-1)">-</button><span>${it.qty}</span><button onclick="changeQty(${p.id},1)">+</button>
+        </div>
+        <div class="ci-remove" onclick="removeFromCart(${p.id})" style="cursor:pointer">Eliminar</div>
+      </div>
+      <b>${fmt(finalPrice(p)*it.qty)}</b>
+    </div>`;
+  }).join('');
+  const t = cartTotals();
+  html += `<div class="cart-summary">
+    <div class="cart-summary-row"><span>Subtotal</span><span>${fmt(t.subtotal)}</span></div>
+    <div class="cart-summary-row"><span>Envío</span><span>${t.shipping? fmt(t.shipping):'Gratis'}</span></div>
+    <div class="cart-summary-row total"><span>Total</span><span>${fmt(t.total)}</span></div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      <button class="btn-outline" style="flex:1" onclick="closeModal('cartModal')">Continuar comprando</button>
+      <button class="btn-primary" style="flex:1" onclick="closeModal('cartModal');openModal('checkoutModal')">Finalizar compra</button>
+    </div>
+  </div>`;
+  document.getElementById('cartBody').innerHTML = html;
+}
+function openCart(){renderCart();openModal('cartModal');}
+function updateBadges(){
+  document.getElementById('cartBadge').textContent = state.cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('favBadge').textContent = state.favs.length;
+}
+
+/* ===== PRODUCT DETAIL ===== */
+let currentDetailId=null, detailQty=1;
+function openProduct(id){
+  currentDetailId=id; detailQty=1;
+  const p = state.products.find(x=>x.id===id);
+  const si = stockInfo(p.stock);
+  const related = state.products.filter(r=>r.category===p.category && r.id!==p.id).slice(0,3);
+  document.getElementById('productBody').innerHTML = `
+    <div class="pd-layout">
+      <div class="pd-img">${pIcon(p.category)}</div>
+      <div class="pd-info">
+        <span class="p-cat">${p.category}</span><br><span class="p-brand">${p.brand}</span>
+        <h3 style="margin:6px 0">${p.name}</h3>
+        <div class="p-stars">${stars(p.rating)}</div>
+        <div class="p-price-row" style="margin:8px 0"><span class="p-price" style="font-size:20px">${fmt(finalPrice(p))}</span>${p.discount?`<span class="p-old">${fmt(p.price)}</span><span class="p-badge">-${p.discount}%</span>`:''}</div>
+        <p style="font-size:13px;color:var(--text-light);line-height:1.6">${p.desc}</p>
+        <span class="p-stock ${si.cls}">${si.label}</span>
+        <div class="qty-selector">
+          <button onclick="detailQty=Math.max(1,detailQty-1);document.getElementById('detailQtyLabel').textContent=detailQty">-</button>
+          <span id="detailQtyLabel">${detailQty}</span>
+          <button onclick="detailQty=Math.min(${p.stock||1},detailQty+1);document.getElementById('detailQtyLabel').textContent=detailQty">+</button>
+        </div>
+        <button class="add-cart-btn" ${p.stock<=0?'disabled':''} onclick="addDetailToCart(${p.id})">${p.stock<=0?'Agotado':'Agregar al carrito'}</button>
+      </div>
+    </div>
+    ${related.length?`<div class="related-title">Productos relacionados</div><div class="product-grid" style="margin-top:12px">${related.map(cardHTML).join('')}</div>`:''}
+  `;
+  openModal('productModal');
+}
+function addDetailToCart(id){
+  const p = state.products.find(x=>x.id===id);
+  const item = state.cart.find(x=>x.id===id);
+  const inCart = item?item.qty:0;
+  if(inCart+detailQty>p.stock){toast('No hay suficiente stock.');return;}
+  if(item) item.qty+=detailQty; else state.cart.push({id,qty:detailQty});
+  persist();updateBadges();toast('✨ Producto agregado al carrito');
+}
+
+/* ===== AUTH ===== */
+function doLogin(e){
+  e.preventDefault();
+  const email=document.getElementById('loginEmail').value, pass=document.getElementById('loginPass').value;
+  const u = state.users.find(x=>x.email===email && x.pass===pass);
+  if(!u){document.getElementById('loginError').style.display='block';return false;}
+  document.getElementById('loginError').style.display='none';
+  state.user={name:u.name,email:u.email}; persist();
+  closeModal('loginModal'); toast('¡Bienvenida de nuevo, '+u.name+'!');
+  return false;
+}
+function doRegister(e){
+  e.preventDefault();
+  const name=document.getElementById('regName').value, email=document.getElementById('regEmail').value;
+  const p1=document.getElementById('regPass').value, p2=document.getElementById('regPass2').value;
+  const err=document.getElementById('regError');
+  if(p1!==p2){err.textContent='Las contraseñas no coinciden.';err.style.display='block';return false;}
+  if(state.users.find(u=>u.email===email)){err.textContent='Ese correo ya está registrado.';err.style.display='block';return false;}
+  err.style.display='none';
+  state.users.push({name,email,pass:p1}); state.user={name,email}; persist();
+  closeModal('registerModal'); toast('¡Cuenta creada! Bienvenida '+name);
+  return false;
+}
+function logout(){state.user=null;persist();closeModal('profileModal');toast('Sesión cerrada.');}
+function renderProfile(){
+  if(!state.user){document.getElementById('profileBody').innerHTML='<p>No has iniciado sesión.</p>';return;}
+  const myOrders = state.orders.filter(o=>o.email===state.user.email);
+  document.getElementById('profileBody').innerHTML = `
+    <p><b>Nombre:</b> ${state.user.name}</p><p><b>Correo:</b> ${state.user.email}</p>
+    <p style="margin-top:10px"><b>Pedidos realizados:</b> ${myOrders.length}</p>
+    <p><b>Favoritos guardados:</b> ${state.favs.length}</p>
+    <button class="btn-outline" style="margin-top:14px;width:100%" onclick="logout()">Cerrar sesión</button>`;
+}
+document.getElementById('profileModal').addEventListener('transitionstart',renderProfile);
+
+/* ===== CHECKOUT ===== */
+function doCheckout(e){
+  e.preventDefault();
+  if(!state.cart.length){toast('Tu carrito está vacío.');return false;}
+  const t = cartTotals();
+  const order = {
+    id:'SB-'+Date.now().toString().slice(-8),
+    name:document.getElementById('coName').value, email:document.getElementById('coEmail').value,
+    items: state.cart.map(it=>({...state.products.find(p=>p.id===it.id),qty:it.qty})),
+    total:t.total, payment:document.getElementById('coPayment').value, date:new Date().toLocaleDateString('es-CO')
+  };
+  // decrement stock
+  state.cart.forEach(it=>{const p=state.products.find(x=>x.id===it.id);p.stock=Math.max(0,p.stock-it.qty);});
+  state.orders.push(order); state.cart=[]; persist(); updateBadges();
+  closeModal('checkoutModal');
+  document.getElementById('confirmBody').innerHTML = `
+    <h2 style="color:var(--pink-strong)">¡Compra realizada con éxito! 💗</h2>
+    <p style="margin:10px 0">Número de pedido: <b>${order.id}</b></p>
+    <div style="text-align:left;font-size:13px;background:var(--pink-baby);border-radius:10px;padding:12px;margin:10px 0">
+      ${order.items.map(i=>`${i.name} x${i.qty} — ${fmt(finalPrice(i)*i.qty)}`).join('<br>')}
+    </div>
+    <p><b>Total: ${fmt(order.total)}</b></p>
+    <p style="font-size:12px;color:var(--text-light);margin-top:8px">Método: ${order.payment} · Fecha: ${order.date}</p>
+    <button class="btn-primary" style="margin-top:16px;width:100%" onclick="closeModal('confirmModal');showHome()">Seguir comprando</button>`;
+  openModal('confirmModal'); renderCatalog();
+  return false;
+}
+
+/* ===== ADMIN ===== */
+function adminTab(tab,btn){
+  document.querySelectorAll('.admin-tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderAdmin(tab);
+}
+function renderAdmin(tab='products'){
+  if(tab==='products'){
+    document.getElementById('adminBody').innerHTML = `
+      <button class="btn-primary" style="margin-bottom:12px" onclick="adminAddProduct()">+ Agregar producto</button>
+      <table><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th></th></tr>
+      ${state.products.map(p=>`<tr><td>${p.emoji} ${p.name}</td><td>${p.category}</td><td>${fmt(p.price)}</td><td>${p.stock}</td>
+        <td><button class="mini-btn edit" onclick="adminEditProduct(${p.id})">Editar</button> <button class="mini-btn del" onclick="adminDeleteProduct(${p.id})">Eliminar</button></td></tr>`).join('')}
+      </table>`;
+  } else {
+    document.getElementById('adminBody').innerHTML = `
+      <table><tr><th>Producto</th><th>Stock</th><th>Estado</th><th>Actualizar</th></tr>
+      ${state.products.map(p=>{const si=stockInfo(p.stock);return `<tr><td>${p.name}</td><td>${p.stock}</td><td class="p-stock ${si.cls}">${si.label.split(':')[0]}</td>
+        <td><input type="number" min="0" value="${p.stock}" style="width:60px;padding:4px" onchange="updateStock(${p.id},this.value)"></td></tr>`}).join('')}
+      </table>`;
+  }
+}
+function updateStock(id,val){const p=state.products.find(x=>x.id===id);p.stock=Math.max(0,+val);persist();toast('Inventario actualizado.');renderCatalog();}
+function adminDeleteProduct(id){
+  if(!confirm('¿Eliminar este producto?'))return;
+  state.products = state.products.filter(p=>p.id!==id); persist(); renderAdmin(); renderCatalog(); renderNew();
+  toast('Producto eliminado.');
+}
+function adminAddProduct(){
+  const name=prompt('Nombre del producto:'); if(!name)return;
+  const category=prompt('Categoría (rostro/ojos/labios/skincare/brochas/accesorios/kits):','rostro');
+  const price=+prompt('Precio (COP):','30000')||30000;
+  const stock=+prompt('Stock inicial:','10')||10;
+  const id = Math.max(...state.products.map(p=>p.id))+1;
+  state.products.push({id,name,category,brand:'Sweet Glow',price,discount:0,rating:'4.5',stock,isNew:true,emoji:ICONS[category]||'✨',desc:name+' — producto Sweet Beauty.',popularity:50});
+  persist(); renderAdmin(); renderCatalog(); renderNew();
+  toast('Producto agregado.');
+}
+function adminEditProduct(id){
+  const p = state.products.find(x=>x.id===id);
+  const price=prompt('Nuevo precio (COP):',p.price); if(price!==null)p.price=+price||p.price;
+  const stock=prompt('Nuevo stock:',p.stock); if(stock!==null)p.stock=+stock;
+  persist(); renderAdmin(); renderCatalog();
+  toast('Producto actualizado.');
+}
+
+/* ===== NEWSLETTER / CONTACT ===== */
+function subscribeNewsletter(e){e.preventDefault();toast('💌 ¡Gracias por suscribirte a Sweet Beauty!');document.getElementById('newsEmail').value='';return false;}
+function sendContact(e){e.preventDefault();toast('Mensaje enviado. ¡Gracias por escribirnos!');closeModal('contactModal');e.target.reset();return false;}
+
+/* ===== INIT ===== */
+renderCats(); renderNew(); renderCatalog(); updateBadges();
+</script>
+</body>
+</html>
